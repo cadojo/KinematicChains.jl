@@ -13,6 +13,16 @@ Rotations = "6038ab10-8711-5258-84ad-4b1120ba62dc"
 StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 Symbolics = "0c5d862f-8b57-4792-8d23-62f2024744c7"
 
+[compat]
+julia = "1"
+BlockArrays = "0.16"
+CoordinateTransformations = "0.6"
+DocStringExtensions = "0.9"
+ModelingToolkit = "8"
+Rotations = "1"
+StaticArrays = "1"
+Symbolics = "5"
+
 [extras]
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
 Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
