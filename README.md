@@ -4,12 +4,11 @@
 # ManipulatorKinematics.jl
 
 _An extension of
-[ModelingToolkit.jl](https://github.com/SciML/ModelingToolkit.jl) which provides kinematic models for serial and parallel robotic manipulators.
+[ModelingToolkit.jl](https://github.com/SciML/ModelingToolkit.jl) which provides kinematic models for serial and parallel robotic manipulators._
 
 > **Warning**
 >
 > This package is under active development.
->
 
 ## Installation
 
