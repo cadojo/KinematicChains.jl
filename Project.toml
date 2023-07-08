@@ -4,6 +4,7 @@ authors = ["Joe Carpinelli <joseph.d.carpinelli@loopy.software>"]
 version = "0.1.0"
 
 [deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
 BlockArrays = "8e7c35d0-a365-5155-bbbb-fb81a777f24e"
 CoordinateTransformations = "150eb455-5306-5404-9cee-2592286d6298"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
@@ -14,7 +15,6 @@ StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 Symbolics = "0c5d862f-8b57-4792-8d23-62f2024744c7"
 
 [compat]
-julia = "1"
 BlockArrays = "0.16"
 CoordinateTransformations = "0.6"
 DocStringExtensions = "0.9"
@@ -22,6 +22,7 @@ ModelingToolkit = "8"
 Rotations = "1"
 StaticArrays = "1"
 Symbolics = "5"
+julia = "1"
 
 [extras]
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"

@@ -28,23 +28,61 @@ using ModelingToolkit
 using BlockArrays
 using CoordinateTransformations
 
-# TODO: should I use an adjoint, or a transpose, below?
-
 """
 An active rotation about the X axis.
 """
-Rx(θ) = RotX(θ)'
+function Rx(θ::Real)
+    o = zero(θ)
+    l = one(θ)
+    
+    c = cos(θ)
+    s = sin(θ)
+
+    matrix = @SMatrix [
+        l  o  o
+        o  c  s
+        o -s  c
+    ]
+
+    return RotMatrix{3}(matrix)
+end
 
 """
 An active rotation about the Y axis.
 """
-Ry(θ) = RotY(θ)'
+function Ry(θ::Real)
+    o = zero(θ)
+    l = one(θ)
+    
+    c = cos(θ)
+    s = sin(θ)
+
+    matrix = @SMatrix [
+        c  o -s
+        o  l  o
+    ]
+
+    return RotMatrix{3}(matrix)
+end
 
 """
 An active rotation about the Z axis.
 """
-Rz(θ) = RotZ(θ)'
+function Rz(θ::Real)
+    o = zero(θ)
+    l = one(θ)
+    
+    c = cos(θ)
+    s = sin(θ)
 
+    matrix = @SMatrix [
+         c  s  o
+        -s  c  o
+         o  o  l
+    ]
+
+    return RotMatrix{3}(matrix)
+end
 
 """
 A full 6DOF Cartesian state for robotic manipulators. The orientation is an **active** rotation.
@@ -55,7 +93,7 @@ struct Transform{F<:Real} <: Transformation
 
     function Transform(position, orientation) 
         F = Base.promote_eltype(position, orientation)
-        new{F}(SVector{3,F}(position), orientation)
+        new{F}(SVector{3,F}(position), RotMatrix{3,F}(orientation))
     end
 
     function Transform(::LinearAlgebra.UniformScaling{F}) where F
@@ -64,7 +102,7 @@ struct Transform{F<:Real} <: Transformation
 end
 
 """
-Given **modified** DH parameters, return the transformation matrix
+Given **modified** DH parameters, return the coordinate `Transform`
 which maps frame i-1 to frame i.
 """
 function Transform(α::Real, a::Real, d::Real, θ::Real)
@@ -82,8 +120,17 @@ function Transform(α::Real, a::Real, d::Real, θ::Real)
     Transform(P, R)
 end
 
+
+(*)(from::Transform, to::Transform) = Transform(from.orientation * to.position + from.position, from.orientation * to.orientation)
+(^)(T::Transform, power::Integer) = reduce(*, repeat())
 function Base.collect(transform::Transform{F}) where {F}
-    return Matrix(BlockArrays.mortar(transform))
+    o = zero(F)
+    l = one(F)
+    
+    return vcat(
+        hcat(transform.orientation, transform.position),
+        @SMatrix [o o o l]
+    )
 end
 
 function BlockArrays.mortar(transform::Transform{F}) where {F}
