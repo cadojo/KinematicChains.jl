@@ -25,11 +25,20 @@ struct JointLimits{F<:Real}
     end
 end
 
-struct RevoluteJoint{F} <: AbstractJoint 
+"""
+A revolute joint implementation.
+"""
+struct RevoluteJoint{F<:Real} <: AbstractJoint 
 
 end
 
-struct PrismaticJoint <: AbstractJoint end
+"""
+A prismatic joint implementation.
+"""
+struct PrismaticJoint{F<:Real} <: AbstractJoint end
 
+"""
+A fixed-joint implementation.
+"""
 struct FixedJoint <: AbstractJoint end
 
