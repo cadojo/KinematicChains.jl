@@ -1,9 +1,9 @@
 using Test
-using Rotations, LinearAlgebra
+using CoordinateTransformations
 using ManipulatorKinematics
 
 @testset "Constructors" begin
-    @test Transform(
-           zeros(3), QuatRotation(I(3)),
-    ) isa Transform{Float64}
+    @test MDHTranslation(0,0,0,0) isa Transformation
+    @test MDHRotation(0,0,0,0) isa Transformation
+    @test MDHMatrix(0,0,0,0) isa AbstractMatrix
 end
