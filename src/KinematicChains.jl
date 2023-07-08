@@ -11,7 +11,7 @@ $(EXPORTS)
 
 $(IMPORTS)
 """
-module ManipulatorKinematics
+module KinematicChains
 
 using DocStringExtensions
 include("docstrings.jl")
@@ -84,5 +84,7 @@ function Rz(θ::Real)
 end
 
 include("mdh.jl")
+include("chains.jl")
+
 
 end

@@ -1,12 +1,12 @@
 using Latexify
 using Documenter
 using ModelingToolkit
-using ManipulatorKinematics
+using KinematicChains
 
 makedocs(
-    sitename="ManipulatorKinematics",
+    sitename="KinematicChains",
     format=Documenter.HTML(),
-    modules=[ManipulatorKinematics],
+    modules=[KinematicChains],
     pages=[
         "Overview" => [
             "Getting Started" => "index.md",
@@ -20,7 +20,7 @@ makedocs(
 
 deploydocs(
     target="build",
-    repo="github.com/cadojo/ManipulatorKinematics.jl.git",
+    repo="github.com/cadojo/KinematicChains.jl.git",
     branch="gh-pages",
     devbranch="main",
     versions=["stable" => "v^", "manual", "v#.#", "v#.#.#"],

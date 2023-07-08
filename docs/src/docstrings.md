@@ -3,7 +3,7 @@ _All docstrings!_
 
 ```@autodocs
 Modules = [
-    ManipulatorKinematics
+    KinematicChains
 ]
 Order = [:module, :type, :function]
 ```

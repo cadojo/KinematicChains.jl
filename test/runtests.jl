@@ -1,6 +1,6 @@
 using Test
 using CoordinateTransformations
-using ManipulatorKinematics
+using KinematicChains
 
 @testset "Constructors" begin
     @test MDHTranslation(0,0,0,0) isa Transformation

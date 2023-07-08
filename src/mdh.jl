@@ -17,7 +17,7 @@ function MDHRotation(α::Real, a::Real, d::Real, θ::Real)
 end
 
 
-function MDHRotation(α::AbstractVector{<:Real}, a::AbstractVector{<:Real}, d::AbstractVector{<:Real}, θ::AbstractVector{<:Real})
+function MDHRotation(α::AbstractVector, a::AbstractVector, d::AbstractVector, θ::AbstractVector)
     return mapreduce(MDHRotation, CoordinateTransformations.compose, α, a, d, θ)
 end
 
@@ -33,7 +33,7 @@ function MDHTranslation(α::Real, a::Real, d::Real, θ::Real)
     return AffineMap(R,P)
 end
 
-function MDHTranslation(α::AbstractVector{<:Real}, a::AbstractVector{<:Real}, d::AbstractVector{<:Real}, θ::AbstractVector{<:Real})
+function MDHTranslation(α::AbstractVector, a::AbstractVector, d::AbstractVector, θ::AbstractVector)
     return mapreduce(MDHTranslation, CoordinateTransformations.compose, α, a, d, θ)
 end
 
@@ -52,7 +52,7 @@ function MDHMatrix(α::Real, a::Real, d::Real, θ::Real)
 end
 
 
-function MDHMatrix(α::AbstractVector{<:Real}, a::AbstractVector{<:Real}, d::AbstractVector{<:Real}, θ::AbstractVector{<:Real})
+function MDHMatrix(α::AbstractVector, a::AbstractVector, d::AbstractVector, θ::AbstractVector)
     R = MDHRotation(α, a, d, θ).linear
     P = MDHTranslation(α, a, d, θ).translation
 
