@@ -20,7 +20,7 @@ makedocs(
 
 deploydocs(
     target="build",
-    repo="github.com/cadojo/KinematicChains.jl.git",
+    repo="github.com/cadojo/KinematicChains.jl",
     branch="gh-pages",
     devbranch="main",
     versions=["stable" => "v^", "manual", "v#.#", "v#.#.#"],
