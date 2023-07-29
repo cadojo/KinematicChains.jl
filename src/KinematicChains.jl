@@ -28,6 +28,17 @@ using ModelingToolkit
 using CoordinateTransformations
 
 """
+The skew-symmetric matrix, which represents the vector cross-product.
+"""
+skewsymmetric(x::Real, y::Real, z::Real) = @SMatrix [
+    zero(x) -z y
+     z zero(y) -x
+     -y x zero(z)
+]
+
+skewsymmetric(vector::AbstractVecOrMat) = skewsymmetric(vector...)
+
+"""
 An active rotation about the X axis.
 """
 function Rx(θ::Real)
@@ -39,8 +50,8 @@ function Rx(θ::Real)
 
     matrix = @SMatrix [
         l  o  o
-        o  c  s
-        o -s  c
+        o  c -s
+        o  s  c
     ]
 
     return RotMatrix{3}(matrix)
@@ -57,8 +68,9 @@ function Ry(θ::Real)
     s = sin(θ)
 
     matrix = @SMatrix [
-        c  o -s
-        o  l  o
+         c  o  s
+         o  l  o
+        -s  o  c
     ]
 
     return RotMatrix{3}(matrix)
@@ -75,16 +87,17 @@ function Rz(θ::Real)
     s = sin(θ)
 
     matrix = @SMatrix [
-         c  s  o
-        -s  c  o
-         o  o  l
+        c -s  o
+        s  c  o
+        o  o  l
     ]
 
     return RotMatrix{3}(matrix)
 end
 
 include("mdh.jl")
-include("chains.jl")
+include("joints.jl")
+# include("chains.jl")
 
 
 end
