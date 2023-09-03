@@ -17,8 +17,20 @@ function MDHRotation(α::Real, a::Real, d::Real, θ::Real)
 end
 
 
-function MDHRotation(α::AbstractVector, a::AbstractVector, d::AbstractVector, θ::AbstractVector)
+function MDHRotation(α::AbstractVecOrMat, a::AbstractVecOrMat, d::AbstractVecOrMat, θ::AbstractVecOrMat)
     return mapreduce(MDHRotation, CoordinateTransformations.compose, α, a, d, θ)
+end
+
+"""
+Given **modified** DH parameters, return the translation from frame 
+i-1 to frame i **without** any rotations applies.
+"""
+function MDHTranslation(α::Real, a::Real, d::Real, θ::Real)
+    return Translation(a, -sin(α) * d, cos(α) * d)
+end
+
+function MDHTranslation(α::AbstractVecOrMat, a::AbstractVecOrMat, d::AbstractVecOrMat, θ::AbstractVecOrMat)
+    return mapreduce(MDHTranslation, CoordinateTransformations.compose, α, a, d, θ)
 end
 
 
@@ -26,15 +38,15 @@ end
 Given **modified** DH parameters, return the coordinate mapping
 from frame i-1 to frame i.
 """
-function MDHTranslation(α::Real, a::Real, d::Real, θ::Real)
+function MDHTransformation(α::Real, a::Real, d::Real, θ::Real)
     R = MDHRotation(α, a, d, θ).linear
-    P = SVector(a, -sin(α)*d, cos(α)*d)
+    P = MDHTranslation(α, a, d, θ).translation
 
     return AffineMap(R,P)
 end
 
-function MDHTranslation(α::AbstractVector, a::AbstractVector, d::AbstractVector, θ::AbstractVector)
-    return mapreduce(MDHTranslation, CoordinateTransformations.compose, α, a, d, θ)
+function MDHTransformation(α::AbstractVecOrMat, a::AbstractVecOrMat, d::AbstractVecOrMat, θ::AbstractVecOrMat)
+    return mapreduce(MDHTransformation, CoordinateTransformations.compose, α, a, d, θ)
 end
 
 """
@@ -52,12 +64,13 @@ function MDHMatrix(α::Real, a::Real, d::Real, θ::Real)
 end
 
 
-function MDHMatrix(α::AbstractVector, a::AbstractVector, d::AbstractVector, θ::AbstractVector)
-    R = MDHRotation(α, a, d, θ).linear
-    P = MDHTranslation(α, a, d, θ).translation
+function MDHMatrix(α::AbstractVecOrMat, a::AbstractVecOrMat, d::AbstractVecOrMat, θ::AbstractVecOrMat)
+    result = mapreduce(MDHTransformation, CoordinateTransformations.compose, α, a, d, θ)
+    R = result.linear
+    P = result.translation
 
     return vcat(
         hcat(R, P),
         SMatrix{1,4}(0,0,0,1)
-    ) 
+    )
 end
