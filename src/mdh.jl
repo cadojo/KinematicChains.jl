@@ -46,6 +46,7 @@ function MDHRotation(α, θ)
     return LinearMap(R)
 end
 
+MDHRotation(a, α, d, θ) = MDHRotation(α, θ)
 
 function MDHRotation(a::AbstractVecOrMat, α::AbstractVecOrMat, d::AbstractVecOrMat, θ::AbstractVecOrMat)
     return mapreduce(MDHRotation, CoordinateTransformations.compose, a, α, d, θ)
@@ -58,6 +59,8 @@ i-1 to frame i **without** any rotations applies.
 function MDHTranslation(a, α, d)
     return Translation(a, -sin(α) * d, cos(α) * d)
 end
+
+MDHTranslation(a, α, d, θ) = MDHTranslation(a, α, d)
 
 function MDHTranslation(a::AbstractVecOrMat, α::AbstractVecOrMat, d::AbstractVecOrMat, θ::AbstractVecOrMat)
     return mapreduce(MDHTranslation, CoordinateTransformations.compose, a, α, d, θ)
