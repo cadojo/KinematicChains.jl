@@ -49,7 +49,7 @@ end
 MDHRotation(a, α, d, θ) = MDHRotation(α, θ)
 
 function MDHRotation(a::AbstractVecOrMat, α::AbstractVecOrMat, d::AbstractVecOrMat, θ::AbstractVecOrMat)
-    return mapreduce(MDHRotation, CoordinateTransformations.compose, a, α, d, θ)
+    return mapreduce(MDHRotation, CoordinateTransformations.compose, collect(a), collect(α), collect(d), collect(θ))
 end
 
 """
@@ -63,7 +63,7 @@ end
 MDHTranslation(a, α, d, θ) = MDHTranslation(a, α, d)
 
 function MDHTranslation(a::AbstractVecOrMat, α::AbstractVecOrMat, d::AbstractVecOrMat, θ::AbstractVecOrMat)
-    return mapreduce(MDHTranslation, CoordinateTransformations.compose, a, α, d, θ)
+    return mapreduce(MDHTranslation, CoordinateTransformations.compose, collect(a), collect(α), collect(d), collect(θ))
 end
 
 
@@ -79,7 +79,7 @@ function MDHTransformation(a, α, d, θ)
 end
 
 function MDHTransformation(a::AbstractVecOrMat, α::AbstractVecOrMat, d::AbstractVecOrMat, θ::AbstractVecOrMat)
-    return mapreduce(MDHTransformation, CoordinateTransformations.compose, a, α, d, θ)
+    return mapreduce(MDHTransformation, CoordinateTransformations.compose, collect(a), collect(α), collect(d), collect(θ))
 end
 
 """
@@ -98,7 +98,7 @@ end
 
 
 function MDHMatrix(a::AbstractVecOrMat, α::AbstractVecOrMat, d::AbstractVecOrMat, θ::AbstractVecOrMat)
-    result = mapreduce(MDHTransformation, CoordinateTransformations.compose, a, α, d, θ)
+    result = mapreduce(MDHTransformation, CoordinateTransformations.compose, collect(a), collect(α), collect(d), collect(θ))
     R = result.linear
     P = result.translation
 
