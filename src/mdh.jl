@@ -70,7 +70,7 @@ from frame i-1 to frame i.
 """
 function MDHTransformation(a, α, d, θ)
     R = MDHRotation(a, α, d, θ).linear
-    P = MDHTranslation(a, α, d, θ).translation
+    P = MDHTranslation(a, α, d).translation
 
     return AffineMap(R, P)
 end
